@@ -7,8 +7,7 @@ import json
 
 
 import logging
-from sparql_query.constants import Endpoints, FVC_stratify
-from sparql_query.helper import send_sparql_query, get_patient_count
+from sparql_query.constants import Endpoints
 from sparql_query.QueryBuilder import QueryBuilder
 
 logger = logging.getLogger('console')
@@ -16,11 +15,6 @@ logger = logging.getLogger('console')
 
 def fairvasc_app(request):
 	return HttpResponse(render(request, 'vue_index.html'))
-
-def get_total_count(request):
-	q = QueryBuilder()
-	result = q.send_query(Endpoints[registry_name])
-	return JsonResponse(result)
 
 def get_counts(request):
 	registry_name = request.GET.get('registry')
