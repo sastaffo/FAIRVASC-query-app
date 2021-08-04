@@ -46,7 +46,7 @@ The front-end is in the `vue_frontend` app directory. The HTML file for the web 
 `vue_frontend\templates\vue_frontend\vue_app.html`.
 
 The back-end functionality is in the `sparql_query` app directory.
-`urls.py` contains the path to the `get_counts` function that can be referenced by the front-end.
-`views.py` contains the `get_counts` function that takes a HttpRequest from the front-end and parses the parameters. The parameters are used to create instances of the QueryBuilder class.
-`QueryBuilder.py` contains the `QueryBuilder` class which builds a SPARQL Query from the parameters given, poses it to the given RDF end-point and parses the results.
-`constants.py` contains the end-point URLs (currently Hoth and Endor exist as local end-points) and the correct formatting for the parameters for each of the data elements that can be queried in the application.
+* `urls.py` contains the path to the `get_counts` function that can be referenced by the front-end.
+* `views.py` contains the `get_counts` function that takes a HttpRequest from the front-end and parses the parameters. The parameters are used to create instances of the QueryBuilder class.
+* `QueryBuilder.py` contains the `QueryBuilder` class which builds a SPARQL Query from the parameters given, poses it to the given RDF end-point and parses the results.
+* `constants.py` contains the end-point URLs (currently Hoth and Endor exist as local end-points) and the correct formatting for the parameters for each of the data elements that can be queried in the application.
