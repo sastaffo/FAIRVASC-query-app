@@ -827,12 +827,9 @@
 		methods : {
 			config() {
 				var current_data = {};
-				//console.log(this.data);
 				var secondary = this.data.sec_options[this.data.current_secondary]["text"];
 				var primary_index = (this.data.current_secondary == 1) ? 0 : 1;
-				//console.log(primary_index);
 				var primary = this.data.sec_options[primary_index]["text"];
-				//console.log(primary);
 				var primary_labels = [];
 				for (var i in this.data.input) {
 					var bar = this.data.input[i];
@@ -848,12 +845,9 @@
 					}
 					if (!(primary_labels.includes(bar[primary]))) {
 						primary_labels.push(bar[primary]);
-						//console.log(primary_labels);
 					}
 				}
-				//console.log(current_data);
 				var current_datasets = Object.values(current_data);
-				//console.log(current_datasets);
 				return {
 					type : "bar",
 					data : {
@@ -863,43 +857,33 @@
 					options: {
 						scales: {
 							yAxes:  [{ display:true, ticks: {beginAtZero:true, max:100} }] ,
-							//x:  { title: {display:true, text:primary} } ,
 						}
 					}, // end config.options
 				};
 			},
 			render() {
 				if (this.data.input.length != 0) {
-					//console.log("render()");
 					var ctx = document.getElementById(this.chart_id).getContext("2d");
 					this.barchart = new Chart(ctx, this.config());
 					this.rendered = true;
-				} else {
-					//console.log("no render");
 				}
 			}, // render()
 			update() {
 				if (this.rendered) {
-					//console.log("rendered");
-					//console.log(this.chart_id, "IF //this.rendered == ", this.rendered);
 					if (this.data.input.length != 0) {
-						//console.log("update");
 						this.barchart.config = this.config();
 						this.barchart.update();
 					} else {
 						this.delete();
 					}
 				} else {
-					//console.log(this.chart_id, "ELSE //this.rendered == ", this.rendered);
 					this.render();
 				}
 			}, // update()
 			delete() {
 				if (this.rendered) {
-					//console.log("delete");
 					this.barchart.destroy();
 					this.rendered = false;
-					//console.log(this.barchart);
 				}
 			}, // delete
 		},
@@ -930,34 +914,23 @@
 		},
 		methods : {
 			split_chart() {
-				//this.clear_chart();
-				//console.log("split_chart()");
 				this.rendered = true;
 				var split_by = this.results.chosen_split;
-				//console.log(split_by);
 				var split_results = {};
-				//console.log(this.results.input);
-				//console.log(this.results.sec_options);
 				for (var index in this.results.input) {
 					var datum = Object.assign({}, this.results.input[index]);
-					//console.log(datum);
 					var datum_split = datum[split_by];
-					//console.log(split_by, " ==> ", datum_split);
-					//console.log(datum_split);
 					delete datum[split_by];
 					if (split_results[datum_split]) {
 						split_results[datum_split].push(datum);
 					} else {
 						split_results[datum_split] = [ datum ];
 					}
-					//console.log(split_results);
 				}
-				//console.log(split_results);
 				var splits = Object.keys(split_results);
 				var chart_1_data = Object.assign({}, this.results);
 				chart_1_data.input = split_results[splits[0]];
 				this.$refs.chart_1.subtitle = splits[0];
-				console.log(chart_1_data);
 				this.$refs.chart_1.data = chart_1_data;
 				this.$refs.chart_1.update();
 				var chart_2_data = Object.assign({}, this.results);
@@ -967,9 +940,7 @@
 				this.$refs.chart_2.update();
 			},
 			update_split(event) {
-				console.log("update_split()", event);
 				var new_split = event.target.value;
-				console.log(new_split);
 				this.results.chosen_split = new_split;
 				this.results.sec_options = [];
 				var sec_options_index = 0;
@@ -980,11 +951,9 @@
 						sec_options_index += 1;
 					}
 				}
-				console.log(this.results.sec_options);
 				this.split_chart();
 			},
 			clear_chart() {
-				console.log("clear_chart()");
 				this.$refs.chart_1.subtitle = "";
 				this.$refs.chart_1.data.input = [];
 				this.$refs.chart_1.update();
@@ -998,10 +967,8 @@
 			update() {
 				this.split = (this.results.split_options.length != 0);
 				if (this.split) {
-					//console.log("split");
 					this.split_chart();
 				} else {
-					//console.log("no split");
 					this.rendered = true;
 					// update chart_1
 					this.$refs.chart_1.subtitle = "";
@@ -1246,7 +1213,6 @@
 				axios.get(GET_COUNTS_PATH, { params : request_params })
 				.then(response => {
 					if (response.status == OK) {
-						//console.log(response);
 						return response.data;
 					}
 				})
@@ -1271,7 +1237,6 @@
 						filtered.push(row)
 					}
 				}
-				//console.log("filtered\n", filtered);
 				return filtered;
 			}, // filterRawResults
 			formatResultsArrays: function(response_data) {
@@ -1302,7 +1267,6 @@
 				};
 
 				if (this.types_picked.length == 1) {
-					//console.log("inside types_picked.length == 1");
 					var sec_options = [
 						{ value: 0, text: "..."},
 						{ value: 1, text: this.types_picked[0]},
@@ -1310,7 +1274,6 @@
 					var sec_string = JSON.stringify(sec_options);
 					this.results.strat_with_outcome.sec_options = JSON.parse(sec_string);
 					this.results.outcome_with_strat.sec_options = JSON.parse(sec_string);
-					//console.log(this.results.strat_with_outcome);
 				}
 				else if (this.types_picked.length == 2) {
 					var sec_options = [
@@ -1386,12 +1349,10 @@
 						outcome_with_strat_datum["Sex"] = raw_row.Sex;
 					}
 					this.results.table_data.push(table_row);
-					//console.log(strat_with_outcome_datum);
 					strat_with_outcome_data.push(strat_with_outcome_datum);
 					outcome_with_strat_data.push(outcome_with_strat_datum);
 				} // end for
 
-				//console.log(strat_with_outcome_data);
 				this.$refs.results_table.data = this.results.table_data;
 				this.$refs.results_table.cols = this.columns;
 				this.$refs.results_table.render();

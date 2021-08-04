@@ -72,10 +72,8 @@ class QueryBuilder():
 		sparql_query.setReturnFormat(sparql_CSV)
 		sparql_query.setQuery(self.query_string)
 		result_str = (sparql_query.query().convert()).decode("utf-8")
-		#self.logger.info(result_str)
 		result_dict_raw = self._parse_csv_string(result_str)
 		self._add_results_to_empty(result_dict_raw)
-		#self.logger.info(json.dumps(self.result_dict, indent=2) + "\n\n")
 		return self.result_dict
 	# end send_query
 
