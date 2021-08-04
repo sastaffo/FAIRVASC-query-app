@@ -4,16 +4,6 @@ Endpoints = {
 	'Endor' : "http://localhost:3030/endor/sparql",
 }
 
-Queries = {
-	'prefixes' : ("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX fvc: <http://ontologies.adaptcentre.ie/fairvasc#> "),
-	'total_count' : ("SELECT (COUNT(?subject) as ?patientCount) WHERE {?subject a fvc:Patient.}"),
-	'count_deaths' : ("SELECT (COUNT(?subject) as ?patientCount) WHERE {  ?subject a fvc:Patient; fvc:hasOutcomes ?o. ?o fvc:dateOfDeath ?d. }"),
-	'count_sex' : ("SELECT (COUNT(?subject) as ?patientCount) WHERE {  ?subject a fvc:Patient; fvc:gender ?g; FILTER (?g ='SEX') } group by ?g"),
-	'count_deaths_sex' : ("SELECT (COUNT(?subject) as ?patientCount) WHERE {  ?subject a fvc:Patient; fvc:gender ?g; fvc:hasOutcomes ?o. ?o fvc:dateOfDeath ?d. FILTER (?g ='SEX') } group by ?g"),
-	'count_single_param' : ("SELECT (COUNT(?subject) as ?patientCount) WHERE {  ?subject a fvc:Patient; fvc:STRAT_TYPE ?type. ?type fvc:STRAT_PRED ?param. FILTER (?param = 'STRAT_PARAM') } group by ?param"),
-	'count_deaths_single_param' : ("SELECT (COUNT(?subject) as ?patientCount) WHERE {  ?subject a fvc:Patient; fvc:STRAT_TYPE ?type; fvc:hasOutcomes ?o. ?o fvc:dateOfDeath ?d. ?type fvc:STRAT_PRED ?param. FILTER (?param = 'STRAT_PARAM') } group by ?param"),
-};
-
 FVC_PARAMS = {
 	'ancaSpec' : [
 		"MPO positive",

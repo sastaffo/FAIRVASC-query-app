@@ -7,7 +7,7 @@ import json
 
 
 import logging
-from sparql_query.constants import Queries, Endpoints, FVC_stratify
+from sparql_query.constants import Endpoints, FVC_stratify
 from sparql_query.helper import send_sparql_query, get_patient_count
 from sparql_query.QueryBuilder import QueryBuilder
 
