@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<title>FAIRVASC Query Application</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/tabulator-tables@4.2.3/dist/js/tabulator.min.js"></script>
+	<style id="table_style">
+		td.get, td.vis  {
+			border: 0px double black;
+			border-collapse: collapse;
+			text-align: left;
+			vertical-align: top;
+			height: 180px;
+		}
+		th.get  {
+			border: 0px double black;
+			border-collapse: collapse;
+			width: 150px;
+			text-align: center;
+			vertical-align: middle;
+		}
+		td.query_button {
+			border: 0px double black;
+			border-collapse: collapse;
+			width: 50px;
+			text-align: left;
+			vertical-align: bottom;
+		}
+		table.get {
+			border: 0px double black;
+			table-layout: fixed;
+		}
+		td.button_cell {
+			vertical-align: bottom;
+		}
+	</style>
+	<style id="tabulator_style">
+		/*adapted from:
+		https://github.com/elreviae/coviddata/blob/master/css/tabulator_midnight.min.css*/
+
+		.tabulator{
+			position:relative; border:1px solid #000000; background-color:#ffffff;
+			overflow:hidden; font-size:14px; text-align:left; transform:translatez(0)
+		}
+
+		.tabulator[tabulator-layout=fitDataFill] .tabulator-tableHolder .tabulator-table{
+			min-width:100%
+		}
+
+		.tabulator[tabulator-layout=fitDataTable]{
+			display:inline-block
+		}
+
+		.tabulator.tabulator-block-select{
+			-webkit-user-select:none; -ms-user-select:none; user-select:none
+		}
+
+		.tabulator .tabulator-header{
+			position:relative; box-sizing:border-box; width:100%;
+			border-bottom:1px solid #000000; background-color:#ffffff; color:#ffffff;
+			font-weight:700; white-space:nowrap; overflow:hidden; -moz-user-select:none;
+			-khtml-user-select:none; -webkit-user-select:none; -o-user-select:none
+		}
+
+		.tabulator .tabulator-header.tabulator-header-hidden{
+			display:none
+		}
+
+		.tabulator .tabulator-header .tabulator-col{
+			display:inline-block; position:relative; box-sizing:border-box;
+			border-right:1px solid #000000; background-color:#0f0f0f; text-align:left;
+			vertical-align:bottom; overflow:hidden
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-moving{
+			position:absolute; border:1px solid #999; background:#1a1a1a;
+			pointer-events:none
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content{
+			box-sizing:border-box; position:relative; padding:1px
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-header-menu-button{
+			padding:0 8px
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-header-menu-button:hover{
+			cursor:pointer; opacity:.6
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-col-title-holder{
+			position:relative
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-col-title{
+			box-sizing:border-box; width:100%; white-space:nowrap; overflow:hidden;
+			text-overflow:ellipsis; vertical-align:bottom
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-col-title .tabulator-title-editor{
+			box-sizing:border-box; width:100%; border:1px solid #999; padding:1px;
+			background:#444; color:#fff
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-col-title .tabulator-header-menu-button +.tabulator-title-editor{
+			width:calc(100% - 22px)
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter{
+			display:-ms-flexbox; display:flex; -ms-flex-align:center; align-items:center;
+			position:absolute; top:0; bottom:0; right:4px
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-col-content
+		.tabulator-col-sorter .tabulator-arrow{
+			width:0; height:0; border-left:6px solid transparent;
+			border-right:6px solid transparent; border-bottom:6px solid #bbb
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-col-group
+		.tabulator-col-group-cols{
+			position:relative; display:-ms-flexbox; display:flex;
+			border-top:1px solid #aaa; overflow:hidden; margin-right:-1px
+		}
+
+		.tabulator .tabulator-header .tabulator-col:first-child
+		.tabulator-col-resize-handle.prev{
+			display:none
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-header-filter{
+			position:relative; box-sizing:border-box; margin-top:2px; width:100%;
+			text-align:center
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-header-filter textarea{
+			height:auto!important
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-header-filter svg{
+			margin-top:3px
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input,
+		.tabulator .tabulator-header .tabulator-col .tabulator-header-filter select{
+			border:1px solid #999; background:#444; color:#fff
+		}
+
+		.tabulator .tabulator-header .tabulator-col .tabulator-header-filter
+		input::-ms-clear{
+			width:0; height:0
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable
+		.tabulator-col-title{
+			padding-right:25px
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover{
+			cursor:pointer; background-color:#600050
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none]
+		.tabulator-col-content .tabulator-col-sorter{
+			color:#bbb
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none]
+		.tabulator-col-content .tabulator-col-sorter .tabulator-arrow{
+			border-top:none; border-bottom:6px solid #bbb
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=asc]
+		.tabulator-col-content .tabulator-col-sorter{
+			color:#666
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=asc]
+		.tabulator-col-content .tabulator-col-sorter .tabulator-arrow{
+			border-top:none; border-bottom:6px solid #666
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=desc]
+		.tabulator-col-content .tabulator-col-sorter{
+			color:#666
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=desc]
+		.tabulator-col-content .tabulator-col-sorter .tabulator-arrow{
+			border-bottom:none; border-top:6px solid #666; color:#666
+		}
+
+		.tabulator .tabulator-header .tabulator-col.tabulator-col-vertical
+		.tabulator-col-content .tabulator-col-title{
+			-ms-writing-mode:tb-rl; writing-mode:vertical-rl; text-orientation:mixed;
+			display:-ms-flexbox; display:flex; -ms-flex-align:center;
+			align-items:center; -ms-flex-pack:center; justify-content:center
+		}
+
+		.tabulator .tabulator-header
+		.tabulator-col.tabulator-col-vertical.tabulator-col-vertical-flip
+		.tabulator-col-title{
+			transform:rotate(180deg)
+		}
+
+		.tabulator .tabulator-header .tabulator-col
+		.tabulator-col-vertical.tabulator-sortable .tabulator-col-title{
+			padding-right:0; padding-top:20px
+		}
+
+		.tabulator .tabulator-header
+		.tabulator-col.tabulator-col-vertical.tabulator-sortable.tabulator-col-vertical-flip
+		.tabulator-col-title{
+			padding-right:0; padding-bottom:20px
+		}
+
+		.tabulator .tabulator-header
+		.tabulator-col.tabulator-col-vertical.tabulator-sortable
+		.tabulator-col-sorter{
+			-ms-flex-pack:center; justify-content:center; left:0; right:0; top:4px;
+			bottom:auto
+		}
+
+		.tabulator .tabulator-header .tabulator-frozen{
+			display:inline-block; position:absolute; z-index:10
+		}
+
+		.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-left{
+			border-right:2px solid #888
+		}
+
+		.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-right{
+			border-left:2px solid #888
+		}
+
+		.tabulator .tabulator-header .tabulator-calcs-holder{
+			box-sizing:border-box; min-width:600%; background:#1a1a1a!important;
+			border-top:1px solid #888; border-bottom:1px solid #aaa; overflow:hidden
+		}
+
+		.tabulator .tabulator-header .tabulator-calcs-holder .tabulator-row{
+			background:#1a1a1a!important
+		}
+
+		.tabulator .tabulator-header .tabulator-calcs-holder .tabulator-row
+		.tabulator-col-resize-handle{
+			display:none
+		}
+
+		.tabulator .tabulator-header .tabulator-frozen-rows-holder{
+			min-width:600%
+		}
+
+		.tabulator .tabulator-header .tabulator-frozen-rows-holder:empty{
+			display:none
+		}
+
+		.tabulator .tabulator-tableHolder{
+			position:relative; width:100%; white-space:nowrap; overflow:auto;
+			-webkit-overflow-scrolling:touch
+		}
+
+		.tabulator .tabulator-tableHolder:focus{
+			outline:none
+		}
+
+		.tabulator .tabulator-tableHolder .tabulator-placeholder{
+			box-sizing:border-box; display:-ms-flexbox; display:flex;
+			-ms-flex-align:center; align-items:center; width:100%
+		}
+
+		.tabulator .tabulator-tableHolder
+		.tabulator-placeholder[tabulator-render-mode=virtual]{
+			min-height:100%; min-width:100%
+		}
+
+		.tabulator .tabulator-tableHolder .tabulator-placeholder span{
+			display:inline-block; margin:0 auto; padding:10px; color:#eee;
+			font-weight:700; font-size:20px
+		}
+
+		.tabulator .tabulator-tableHolder .tabulator-table{
+			position:relative; display:inline-block; background-color:#666;
+			white-space:nowrap; overflow:visible; color:#fff
+		}
+
+		.tabulator .tabulator-tableHolder .tabulator-table .tabulator-row.tabulator-calcs{
+			font-weight:700; background:#373737!important
+		}
+
+		.tabulator .tabulator-tableHolder .tabulator-table
+		.tabulator-row.tabulator-calcs.tabulator-calcs-top{
+			border-bottom:2px solid #888
+		}
+
+		.tabulator .tabulator-tableHolder .tabulator-table
+		.tabulator-row.tabulator-calcs.tabulator-calcs-bottom{
+			border-top:2px solid #888
+		}
+
+		.tabulator .tabulator-col-resize-handle{
+			position:absolute; right:0; top:0; bottom:0; width:5px
+		}
+
+		.tabulator .tabulator-col-resize-handle.prev{
+			left:0; right:auto
+		}
+
+		.tabulator .tabulator-col-resize-handle:hover{
+			cursor:ew-resize
+		}
+
+		.tabulator .tabulator-footer{
+			padding:5px 10px; border-top:1px solid #999; background-color:#333;
+			text-align:right; color:#333; font-weight:700; white-space:nowrap;
+			-ms-user-select:none; user-select:none; -moz-user-select:none;
+			-khtml-user-select:none; -webkit-user-select:none; -o-user-select:none
+		}
+
+		.tabulator .tabulator-footer .tabulator-calcs-holder{
+			box-sizing:border-box; width:calc(100% + 20px); margin:-5px -10px 5px;
+			text-align:left; background:#262626!important; border-bottom:1px solid #888;
+			border-top:1px solid #888; overflow:hidden
+		}
+
+		.tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
+			background:#262626!important; color:#fff
+		}
+
+		.tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row
+		.tabulator-col-resize-handle{
+			display:none
+		}
+
+		.tabulator .tabulator-footer .tabulator-calcs-holder:only-child{
+			margin-bottom:-5px; border-bottom:none
+		}
+
+		.tabulator .tabulator-footer .tabulator-paginator label{
+			color:#fff
+		}
+
+		.tabulator .tabulator-footer .tabulator-page-size{
+			display:inline-block; margin:0 5px; padding:2px 5px; border:1px solid #aaa;
+			border-radius:3px
+		}
+
+		.tabulator .tabulator-footer .tabulator-pages{
+			margin:0 7px
+		}
+
+		.tabulator .tabulator-footer .tabulator-page{
+			display:inline-block; margin:0 2px; padding:2px 5px; border:1px solid #aaa;
+			border-radius:3px; background:hsla(0,0%,100%,.2); color:#333;
+			font-family:inherit; font-weight:inherit; font-size:inherit
+		}
+
+		.tabulator .tabulator-footer .tabulator-page.active{
+			color:#fff
+		}
+
+		.tabulator .tabulator-footer .tabulator-page:disabled{
+			opacity:.5
+		}
+
+		.tabulator .tabulator-footer .tabulator-page:not(.disabled):hover{
+			cursor:pointer; background:rgba(0,0,0,.2); color:#fff
+		}
+
+		.tabulator .tabulator-loader{
+			position:absolute; display:-ms-flexbox; display:flex; -ms-flex-align:center;
+			align-items:center; top:0; left:0; z-index:100; height:100%; width:100%;
+			background:rgba(0,0,0,.4); text-align:center
+		}
+
+		.tabulator .tabulator-loader .tabulator-loader-msg{
+			display:inline-block; margin:0 auto; padding:10px 20px; border-radius:10px;
+			background:#fff; font-weight:700; font-size:16px
+		}
+
+		.tabulator .tabulator-loader .tabulator-loader-msg.tabulator-loading{
+			border:4px solid #333; color:#000
+		}
+
+		.tabulator .tabulator-loader .tabulator-loader-msg.tabulator-error{
+			border:4px solid #d00; color:#590000
+		}
+
+		.tabulator-row{
+			position:relative; box-sizing:border-box; min-height:22px;
+			background-color:#666
+		}
+
+		.tabulator-row:nth-child(2n){
+			background-color:#444
+		}
+
+		.tabulator-row.tabulator-selectable:hover{
+			background-color:#999; cursor:pointer
+		}
+
+		.tabulator-row.tabulator-selected{
+			background-color:#000
+		}
+
+		.tabulator-row.tabulator-selected:hover{
+			background-color:#888; cursor:pointer
+		}
+
+		.tabulator-row.tabulator-moving{
+			position:absolute; border-top:1px solid #888; border-bottom:1px solid #888;
+			pointer-events:none!important; z-index:15
+		}
+
+		.tabulator-row .tabulator-row-resize-handle{
+			position:absolute; right:0; bottom:0; left:0; height:5px
+		}
+
+		.tabulator-row .tabulator-row-resize-handle.prev{
+			top:0; bottom:auto
+		}
+
+		.tabulator-row .tabulator-row-resize-handle:hover{
+			cursor:ns-resize
+		}
+
+		.tabulator-row .tabulator-frozen{
+			display:inline-block; position:absolute; background-color:inherit; z-index:10
+		}
+
+		.tabulator-row .tabulator-frozen.tabulator-frozen-left{
+			border-right:2px solid #888
+		}
+
+		.tabulator-row .tabulator-frozen.tabulator-frozen-right{
+			border-left:2px solid #888
+		}
+
+		.tabulator-row .tabulator-responsive-collapse{
+			box-sizing:border-box; padding:5px; border-top:1px solid #888;
+			border-bottom:1px solid #888
+		}
+
+		.tabulator-row .tabulator-responsive-collapse:empty{
+			display:none
+		}
+
+		.tabulator-row .tabulator-responsive-collapse table{
+			font-size:14px
+		}
+
+		.tabulator-row .tabulator-responsive-collapse table tr td{
+			position:relative
+		}
+
+		.tabulator-row .tabulator-responsive-collapse table tr td:first-of-type{
+			padding-right:10px
+		}
+
+		.tabulator-row .tabulator-cell{
+			display:inline-block; position:relative; box-sizing:border-box; padding:4px;
+			vertical-align:middle; white-space:nowrap; overflow:hidden;
+			text-overflow:ellipsis
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-editing{
+			border:1px solid #999; outline:none; padding:0
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-editing input, .tabulator-row
+		.tabulator-cell.tabulator-editing select{
+			border:1px; background:transparent
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-validation-fail{
+			border:1px solid #d00
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-validation-fail input, .tabulator-row
+		.tabulator-cell.tabulator-validation-fail select{
+			border:1px; background:transparent; color:#d00
+		}
+
+		.tabulator-row .tabulator-cell:first-child .tabulator-col-resize-handle.prev{
+			display:none
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-row-handle{
+			display:-ms-inline-flexbox; display:inline-flex; -ms-flex-align:center;
+			align-items:center; -moz-user-select:none; -khtml-user-select:none;
+			-webkit-user-select:none; -o-user-select:none
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box{
+			width:80%
+		}
+
+		.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box
+		.tabulator-row-handle-bar{
+			width:100%; height:3px; margin-top:2px; background:#666
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-branch{
+			display:inline-block; vertical-align:middle; height:9px; width:7px;
+			margin-top:-9px; margin-right:5px; border-bottom-left-radius:1px;
+			border-left:2px solid #888; border-bottom:2px solid #888
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-control{
+			display:-ms-inline-flexbox; display:inline-flex; -ms-flex-pack:center;
+			justify-content:center; -ms-flex-align:center; align-items:center;
+			vertical-align:middle; height:11px; width:11px; margin-right:5px;
+			border:1px solid #fff; border-radius:2px; background:rgba(0,0,0,.1);
+			overflow:hidden
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-control:hover{
+			cursor:pointer; background:rgba(0,0,0,.2)
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-control
+		.tabulator-data-tree-control-collapse{
+			display:inline-block; position:relative; height:7px; width:1px;
+			background:transparent
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-control
+		.tabulator-data-tree-control-collapse:after{
+			position:absolute; content:""; left:-3px; top:3px; height:1px; width:7px;
+			background:#fff
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-control
+		.tabulator-data-tree-control-expand{
+			display:inline-block; position:relative; height:7px; width:1px;
+			background:#fff
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-data-tree-control
+		.tabulator-data-tree-control-expand:after{
+			position:absolute; content:""; left:-3px; top:3px; height:1px; width:7px;
+			background:#fff
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle{
+			display:-ms-inline-flexbox; display:inline-flex; -ms-flex-align:center;
+			align-items:center; -ms-flex-pack:center; justify-content:center;
+			-moz-user-select:none; -khtml-user-select:none; -webkit-user-select:none;
+			-o-user-select:none; height:15px; width:15px; border-radius:20px;
+			background:#fff; color:#666; font-weight:700; font-size:1.1em
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle:hover{
+			opacity:.7
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle.open
+		.tabulator-responsive-collapse-toggle-close{
+			display:initial
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle.open
+		.tabulator-responsive-collapse-toggle-open, .tabulator-row .tabulator-cell
+		.tabulator-responsive-collapse-toggle .tabulator-responsive-collapse-toggle-close{
+			display:none
+		}
+
+		.tabulator-row .tabulator-cell .tabulator-traffic-light{
+			display:inline-block; height:14px; width:14px; border-radius:14px
+		}
+
+		.tabulator-row.tabulator-group{
+			box-sizing:border-box; border-bottom:1px solid #999;
+			border-right:1px solid #888; border-top:1px solid #999; padding:5px;
+			padding-left:10px; background:#ccc; font-weight:700; color:#333; min-width:60%
+		}
+
+		.tabulator-row .tabulator-group:hover{
+			cursor:pointer; background-color:rgba(0,0,0,.1)
+		}
+
+		.tabulator-row.tabulator-group.tabulator-group-visible .tabulator-arrow{
+			margin-right:10px; border-left:6px solid transparent; border-bottom:0
+			border-right:6px solid transparent; border-top:6px solid #666;
+		}
+
+		.tabulator-row.tabulator-group.tabulator-group-level-1{
+			padding-left:30px
+		}
+
+		.tabulator-row.tabulator-group.tabulator-group-level-2{
+			padding-left:50px
+		}
+
+		.tabulator-row.tabulator-group.tabulator-group-level-3{
+			padding-left:70px
+		}
+
+		.tabulator-row.tabulator-group.tabulator-group-level-4{
+			padding-left:90px
+		}
+
+		.tabulator-row.tabulator-group.tabulator-group-level-5{
+			padding-left:110px
+		}
+
+		.tabulator-row.tabulator-group .tabulator-group-toggle{
+			display:inline-block
+		}
+
+		.tabulator-row.tabulator-group .tabulator-arrow{
+			display:inline-block; width:0; height:0; margin-right:16px;
+			border-top:6px solid transparent; border-bottom:6px solid transparent;
+			border-right:0; border-left:6px solid #666; vertical-align:middle
+		}
+
+		.tabulator-row.tabulator-group span{
+			margin-left:10px; color:#666
+		}
+
+		.tabulator.tabulator-ltr{
+			direction:ltr
+		}
+
+		.tabulator-print-fullscreen{
+			position:absolute; top:0; bottom:0; left:0; right:0; z-index:10000
+		}
+
+		body.tabulator-print-fullscreen-hide>:not(.tabulator-print-fullscreen){
+			display:none!important
+		}
+
+		.tabulator-print-table{
+			border-collapse:collapse
+		}
+
+		.tabulator-print-table .tabulator-print-table-group{
+			box-sizing:border-box; border-bottom:1px solid #999;
+			border-right:1px solid #888; border-top:1px solid #999; padding:5px;
+			padding-left:10px; background:#ccc; font-weight:700; color:#333;
+			min-width:100%
+		}
+
+		.tabulator-print-table .tabulator-print-table-group:hover{
+			cursor:pointer; background-color:rgba(0,0,0,.1)
+		}
+
+		.tabulator-print-table .tabulator-print-table-group.tabulator-group-visible
+		.tabulator-arrow{
+			margin-right:10px; border-left:6px solid transparent;
+			border-right:6px solid transparent; border-top:6px solid #666;
+			border-bottom:0
+		}
+
+		.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-1 td{
+			padding-left:30px!important
+		}
+
+		.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-2 td{
+			padding-left:50px!important
+		}
+
+		.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-3 td{
+			padding-left:70px!important
+		}
+
+		.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-4 td{
+			padding-left:90px!important
+		}
+
+		.tabulator-print-table .tabulator-print-table-group.tabulator-group-level-5 td{
+			padding-left:110px!important
+		}
+
+		.tabulator-print-table .tabulator-print-table-group .tabulator-group-toggle{
+			display:inline-block
+		}
+
+		.tabulator-print-table .tabulator-print-table-group .tabulator-arrow{
+			display:inline-block; width:0; height:0; margin-right:16px;
+			border-top:6px solid transparent; border-bottom:6px solid transparent;
+			border-right:0; border-left:6px solid #666; vertical-align:middle
+		}
+
+		.tabulator-print-table .tabulator-print-table-group span{
+			margin-left:10px; color:#666
+		}
+
+		.tabulator-print-table .tabulator-data-tree-branch{
+			display:inline-block; vertical-align:middle; height:9px; width:7px;
+			margin-top:-9px; margin-right:5px; border-bottom-left-radius:1px;
+			border-left:2px solid #888; border-bottom:2px solid #888
+		}
+
+		.tabulator-print-table .tabulator-data-tree-control{
+			display:-ms-inline-flexbox; display:inline-flex; -ms-flex-pack:center;
+			justify-content:center; -ms-flex-align:center; align-items:center;
+			vertical-align:middle; height:11px; width:11px; margin-right:5px;
+			border:1px solid #fff; border-radius:2px; background:rgba(0,0,0,.1);
+			overflow:hidden
+		}
+
+		.tabulator-print-table .tabulator-data-tree-control:hover{
+			cursor:pointer; background:rgba(0,0,0,.2)
+		}
+
+		.tabulator-print-table .tabulator-data-tree-control
+		.tabulator-data-tree-control-collapse{
+			display:inline-block; position:relative; height:7px; width:1px;
+			background:transparent
+		}
+
+		.tabulator-print-table .tabulator-data-tree-control
+		.tabulator-data-tree-control-collapse:after{
+			position:absolute; content:""; left:-3px; top:3px; height:1px; width:7px;
+			background:#fff
+		}
+
+		.tabulator-print-table .tabulator-data-tree-control
+		.tabulator-data-tree-control-expand{
+			display:inline-block; position:relative; height:7px; width:1px;
+			background:#fff
+		}
+
+		.tabulator-print-table .tabulator-data-tree-control .tabulator-data-tree-control-expand:after{
+			position:absolute; content:""; left:-3px; top:3px; height:1px; width:7px;
+			background:#fff
+		}
+	</style>
+</head>
+<body>
+
+
+<script type="text/javascript" id="constants">
+
+	const OK = 200;
+
+	const REG_OPTIONS = ["Endor",  "Hoth" ];
+	const OUTCOME_OPTIONS = [
+		{ value : true, text : "Deceased patients" },
+		{ value : false, text : "Patients with ESKD" },
+	];
+	const TYPE_OPTIONS = [
+		{ value : "ANCA_Specificity", text : "ANCA Specificity", col_width : "200" },
+		{ value : "Main_Diagnosis", text : "Main Diagnosis", col_width : "300" },
+		{ value : "Sex", text : "Patient Sex", col_width : "150" },
+	];
+	const STRAT_PARAMS = {
+		ANCA_Specificity : [ "MPO positive", "PR3 positive", "MPO and PR3 positive", "ELISA negative", "No ELISA performed", "Other" ],
+		mainDiagnosis : [ "Microscopic polyangiitis (MPA)", "Granulomatosis with polyangiitis (GPA)", "Eosinophilic granulomatosis with polyangiitis (EGPA)", "ANCA vasculitis unclassified" ],
+		Sex : [ "Male" , "Female" ],
+	};
+	const CHART_TYPES = {
+		single_simple : 1,
+		single_dropdown : 2,
+		single_multiple_registries : 3,
+		double_dropdown : 4,
+		double_multiple_registries : 5,
+		refined_double : 6,
+	}
+	const COLORS = {
+		"RKD" : "#4ddb14",
+		"Endor" : "#4f00a4",
+		"Hoth" : "#7f98ff",
+		"r1" : "#f2b77a",
+		"r2" : "#db99da",
+		"r3" : "#0142ad",
+		"r4" : "#ff2441",
+		"r5" : "#ff2441",
+		"r6" : "#43daaf",
+		"r7" : "#7e7e8d",
+		"MPO positive" : "#ff6f42",
+		"PR3 positive" : "#0122a2",
+		"ELISA negative" : "#457500",
+		"No ELISA performed" : "#fc00c7",
+		"MPO and PR3 positive" : "#f5b85c",
+		"Other" : "#96002c",
+		"Microscopic polyangiitis (MPA)" : "#9255b3",
+		"Granulomatosis with polyangiitis (GPA)" : "#6bbf6c",
+		"Eosinophilic granulomatosis with polyangiitis (EGPA)" : "#c15048",
+		"ANCA vasculitis unclassified" : "#4f3600",
+		"Male" : "#31677d",
+		"Female" : "#ff78ac",
+	}
+
+	const SPARQL_PATH = "/sparql/";
+	const GET_COUNTS_PATH = SPARQL_PATH + "getCounts";
+	const GET_COUNTS_PARAMS = {
+		registry : null,
+		outcome_deceased : false,
+		ANCA_Specificity : false,
+		Main_Diagnosis : false,
+		Sex : false,
+	};
+
+</script>
+
+<script type="text/javascript" id="graph-component">
+
+	var SingleChart = Vue.extend({
+		delimiters : [ "[[", "]]"],
+		data() {
+			return {
+				chart_id : null,
+				rendered : false,
+				width : "500",
+				height : "400",
+				subtitle : "",
+				data : {input : []},
+				barchart : {},
+			};
+		},
+		mounted() {
+			this.chart_id = "chart_" + String(this._uid);
+		},
+		methods : {
+			config() {
+				var current_data = {};
+				//console.log(this.data);
+				var secondary = this.data.sec_options[this.data.current_secondary]["text"];
+				var primary_index = (this.data.current_secondary == 1) ? 0 : 1;
+				//console.log(primary_index);
+				var primary = this.data.sec_options[primary_index]["text"];
+				//console.log(primary);
+				var primary_labels = [];
+				for (var i in this.data.input) {
+					var bar = this.data.input[i];
+					var secondary_value = bar[secondary];
+					if (current_data[secondary_value]) {
+						current_data[secondary_value]["data"].push(bar.value);
+					} else {
+						current_data[secondary_value] = {
+							label : secondary_value,
+							data : [ bar.value ],
+							backgroundColor : COLORS[secondary_value],
+						};
+					}
+					if (!(primary_labels.includes(bar[primary]))) {
+						primary_labels.push(bar[primary]);
+						//console.log(primary_labels);
+					}
+				}
+				//console.log(current_data);
+				var current_datasets = Object.values(current_data);
+				//console.log(current_datasets);
+				return {
+					type : "bar",
+					data : {
+						labels : primary_labels,
+						datasets : current_datasets,
+					}, // end config.data
+					options: {
+						scales: {
+							yAxes:  [{ display:true, ticks: {beginAtZero:true, max:100} }] ,
+							//x:  { title: {display:true, text:primary} } ,
+						}
+					}, // end config.options
+				};
+			},
+			render() {
+				if (this.data.input.length != 0) {
+					//console.log("render()");
+					var ctx = document.getElementById(this.chart_id).getContext("2d");
+					this.barchart = new Chart(ctx, this.config());
+					this.rendered = true;
+				} else {
+					//console.log("no render");
+				}
+			}, // render()
+			update() {
+				if (this.rendered) {
+					//console.log("rendered");
+					//console.log(this.chart_id, "IF //this.rendered == ", this.rendered);
+					if (this.data.input.length != 0) {
+						//console.log("update");
+						this.barchart.config = this.config();
+						this.barchart.update();
+					} else {
+						this.delete();
+					}
+				} else {
+					//console.log(this.chart_id, "ELSE //this.rendered == ", this.rendered);
+					this.render();
+				}
+			}, // update()
+			delete() {
+				if (this.rendered) {
+					//console.log("delete");
+					this.barchart.destroy();
+					this.rendered = false;
+					//console.log(this.barchart);
+				}
+			}, // delete
+		},
+		template : (
+		'	<div>' +
+		'		<h3><center>[[ subtitle ]]</center></h3>' +
+		'		<canvas :id="chart_id" :width="width" :height="height"></canvas>' +
+		'	</div>'
+		),
+	});
+
+	var ResultsGraph = Vue.extend({
+		delimiters : [ "[[", "]]" ],
+		components : {
+			"single-chart" : SingleChart,
+		},
+		data() {
+			return {
+				graph_id : null,
+				width : "500",
+				height : "400",
+				show_graph : false,
+				rendered : false,
+				results : {},
+				split : false,
+				split_secondary_options : [],
+			};
+		},
+		methods : {
+			split_chart() {
+				//this.clear_chart();
+				//console.log("split_chart()");
+				this.rendered = true;
+				var split_by = this.results.chosen_split;
+				//console.log(split_by);
+				var split_results = {};
+				//console.log(this.results.input);
+				//console.log(this.results.sec_options);
+				for (var index in this.results.input) {
+					var datum = Object.assign({}, this.results.input[index]);
+					//console.log(datum);
+					var datum_split = datum[split_by];
+					//console.log(split_by, " ==> ", datum_split);
+					//console.log(datum_split);
+					delete datum[split_by];
+					if (split_results[datum_split]) {
+						split_results[datum_split].push(datum);
+					} else {
+						split_results[datum_split] = [ datum ];
+					}
+					//console.log(split_results);
+				}
+				//console.log(split_results);
+				var splits = Object.keys(split_results);
+				var chart_1_data = Object.assign({}, this.results);
+				chart_1_data.input = split_results[splits[0]];
+				this.$refs.chart_1.subtitle = splits[0];
+				console.log(chart_1_data);
+				this.$refs.chart_1.data = chart_1_data;
+				this.$refs.chart_1.update();
+				var chart_2_data = Object.assign({}, this.results);
+				chart_2_data.input = split_results[splits[1]];
+				this.$refs.chart_2.subtitle = splits[1];
+				this.$refs.chart_2.data = chart_2_data;
+				this.$refs.chart_2.update();
+			},
+			update_split(event) {
+				console.log("update_split()", event);
+				var new_split = event.target.value;
+				console.log(new_split);
+				this.results.chosen_split = new_split;
+				this.results.sec_options = [];
+				var sec_options_index = 0;
+				for (var index in TYPE_OPTIONS) {
+					var type_option = TYPE_OPTIONS[index];
+					if (!(new_split === type_option.value)) {
+						this.results.sec_options.push({value: sec_options_index, text: type_option.value});
+						sec_options_index += 1;
+					}
+				}
+				console.log(this.results.sec_options);
+				this.split_chart();
+			},
+			clear_chart() {
+				console.log("clear_chart()");
+				this.$refs.chart_1.subtitle = "";
+				this.$refs.chart_1.data.input = [];
+				this.$refs.chart_1.update();
+				if (this.split) {
+					this.$refs.chart_2.subtitle = "";
+					this.$refs.chart_2.data.input = [];
+					this.$refs.chart_2.update();
+				}
+				this.rendered = false;
+			},
+			update() {
+				this.split = (this.results.split_options.length != 0);
+				if (this.split) {
+					//console.log("split");
+					this.split_chart();
+				} else {
+					//console.log("no split");
+					this.rendered = true;
+					// update chart_1
+					this.$refs.chart_1.subtitle = "";
+					this.$refs.chart_1.data = this.results;
+					this.$refs.chart_1.update();
+					// clear chart_2
+					this.$refs.chart_2.subtitle = "";
+					this.$refs.chart_2.delete();
+				}
+			},
+			transpose(event) {
+				var new_secondary = event.target.value;
+				this.results.current_secondary = new_secondary;
+				this.$refs.chart_1.data.current_secondary = new_secondary;
+				if (this.split) {
+					this.$refs.chart_2.data.current_secondary = new_secondary;
+				}
+				this.update();
+				return;
+			}
+		}, // end methods
+		template : (
+			'<div>' +
+			'	<h2 class="chart-title">[[results.title]]</h2>' +
+			'	<table>' +
+			'		<tr v-if="rendered && split">'  +
+			'			<td>' +
+			'				Select Split' +
+			'				<select v-model="results.chosen_split" @change="update_split($event)"> ' +
+			'					<option v-for="split in results.split_options" :value="split" v-bind:key="split">' +
+			'						[[split]]' +
+			'					</option>' +
+			'				</select>' +
+			'			</td>' +
+			'		</tr>' +
+			'		<tr v-if="rendered">' +
+			'			<td>' +
+			'				Select Secondary' +
+			'				<select v-model="results.current_secondary" @change="transpose($event)"> ' +
+			'					<option v-for="sec in results.sec_options" :value="sec.value" v-bind:key="sec.value">' +
+			'						[[sec.text]]' +
+			'					</option>' +
+			'				</select>' +
+			'			</td>' +
+			//'			<td><b>TODO</b> <i>checkbox</i> to combine registry data</td>' +
+			'		</tr>' +
+			'		<tr>' +
+			'			<td> <single-chart ref=chart_1></single-chart> </td>' +
+			'			<td> <single-chart ref=chart_2></single-chart> </td>' +
+			'		</tr>' +
+			'	</table>' +
+			'</div>'
+		),
+	}) // end resultsgraph component
+
+</script>
+
+<script type="text/javascript" id="table-component">
+
+	var ResultsTable = Vue.extend({
+		delimiters : [ "[[", "]]" ],
+		data() {
+			return {
+				data : [],
+				cols : [],
+				table : {},
+			}
+		},
+		methods : {
+			render() {
+				this.table = new Tabulator("#tabulator-table", {
+					layout : "fitColumns",
+					movableColumns : true,
+					columns : this.cols,
+					data : this.data,
+				});
+				this.table.redraw();
+			},
+			clear() {
+				this.table = new Tabulator("#tabulator-table", {
+					layout : "fitColumns",
+					movableColumns : true,
+					columns : [],
+					data : [],
+				});
+				this.table.redraw();
+			}
+		},
+		template : (
+			'<div id="tabulator-table"></div>'
+		), // template
+	}); // end ResultsTable component
+
+</script>
+
+
+<div class="vue" id="vue">
+	<h1>FAIRVASC Query Application</h1>
+	<div id="stratification_user_input">
+		<table class="get">
+			<tr>
+				<th class="get"><h3>Select Registry</h3></th>
+				<th class="get"><h3>Select Specification Types</h3></th>
+				<th><h3>Select Specification Parameters</h3></th>
+				<th></th>
+			</tr>
+			<tr>
+				<td class="get" width="150" id="reg_cell">
+					<table class="get" id="reg_table">
+						<tr v-for="r in registry_options">
+							<td>
+								<input type="radio" :value="r" v-model="registries_picked">
+								[[r]]
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="get" width="150" id="spec_types_cell">
+					<table class="get" id="spec_types_table">
+						<th>
+							<select v-model="outcome_deceased">
+								<option v-for="o in outcome_options" :value="o.value" v-bind:key="o.value">
+									[[o.text]]
+								</option>
+							</select>
+						</th>
+						<tr v-for="t in type_options">
+							<td>
+								<input type="checkbox" :value="t.value" v-model="types_picked" @change="onCheckChangeType($event, t.value)">
+								[[t.text]]
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td id="spec_params_cell" width="650">
+					<table class="get" id="spec_params_table">
+							<td class="get" width="t.col_width" v-for="t in type_options">
+								<table v-if="chosen_options[t.value]['selected'] == true">
+									<th>[[ t.text ]]</th>
+									<tr v-for="o in chosen_options[t.value]['options']">
+										<td>
+											<input type="checkbox" :value="o" v-model="chosen_options[t.value]['picked']">
+											[[ o ]]
+										</td>
+									</tr>
+								</table>
+							</td>
+					</table>
+				</td>
+				<td class="button_cell"> <button type="button" id="query_button" v-on:click="sendQuery">Send Query</button> </td>
+			</tr>
+		</table>
+	</div>
+	<p></p>
+	<div id="results" v-if="queried">
+		<hr>
+		<div class="chartjs-graph">
+			<results-graph
+				ref="graph1"
+				id="strat_with_outcome"
+				:results="results.strat_with_outcome"
+			/>
+		</div>
+		<hr>
+		<div class="chartjs-graph">
+			<results-graph
+				ref="graph2"
+				id="outcome_with_strat"
+				:results="results.outcome_with_strat"
+			/>
+		</div>
+		<hr>
+		<div class="tabulator-table">
+			<results-table ref="results_table"/>
+		</div>
+		<hr>
+	</div>
+</div>
+
+
+<script type="text/javascript" id="vue-app">
+
+	let app = new Vue({
+		el: "#vue",
+		delimiters: [ "[[", "]]" ],
+		components : {
+			'results-graph' : ResultsGraph,
+			'results-table' : ResultsTable,
+		},
+		data: {
+			// stratification selection:
+			queried : false,
+			registry_options: REG_OPTIONS,
+			registries_picked: "Endor",
+			outcome_options: OUTCOME_OPTIONS,
+			outcome_deceased : true,
+			type_options: TYPE_OPTIONS,
+			types_picked : [], //["ANCA_Specificity", "Main_Diagnosis", "Sex"],
+			chosen_options : {
+				ANCA_Specificity : {
+					selected : false, //true,
+					options : STRAT_PARAMS.ANCA_Specificity,
+					picked : [], //["MPO positive", "ELISA negative"],
+				},
+				Main_Diagnosis : {
+					selected : false, //true,
+					options : STRAT_PARAMS.mainDiagnosis,
+					picked : [], //["Microscopic polyangiitis (MPA)", "Eosinophilic granulomatosis with polyangiitis (EGPA)"],
+				},
+				Sex : {
+					selected : false, //true,
+					options : STRAT_PARAMS.Sex,
+					picked : [], //["Male", "Female"],
+				},
+			},
+			// results:
+			rawResults : {},
+			results: {
+				table_data : [],
+				outcome_with_strat : {},
+				strat_with_outcome : {},
+			},
+			columns: [],
+		}, //end data
+		methods: {
+			onCheckChangeType(event, type_value) {
+				this.chosen_options[type_value]["selected"] = event.target.checked;
+			}, // onCheckChangeType
+			sendQuery: function() { // TODO: fix for multiple registries
+				this.queried = true;
+				if (this.types_picked.length == 0) {
+					this.$refs.graph1.clear_chart();
+					this.$refs.results_table.clear();
+					return;
+				}
+				var request_params = Object.assign({}, GET_COUNTS_PARAMS);
+				request_params.registry = this.registries_picked;
+				request_params.outcome_deceased = this.outcome_deceased;
+				for (var type in this.chosen_options) {
+					request_params[type] = this.chosen_options[type]["selected"];
+				}
+				axios.get(GET_COUNTS_PATH, { params : request_params })
+				.then(response => {
+					if (response.status == OK) {
+						//console.log(response);
+						return response.data;
+					}
+				})
+				.then(response_data => {
+					this.formatResultsArrays(response_data);
+				});
+				return;
+			}, // sendQuery
+			filterRawResults: function(response_data) {
+				var filtered = [];
+				for (var r in response_data[this.registries_picked]) {
+					var row = response_data[this.registries_picked][r];
+					var include_row = true;
+					for (type_index in this.types_picked) {
+						var type = this.types_picked[type_index];
+						if ( !(this.chosen_options[type]['picked'].includes(row[type])) ) {
+							include_row = false;
+							break;
+						}
+					}
+					if (include_row) {
+						filtered.push(row)
+					}
+				}
+				//console.log("filtered\n", filtered);
+				return filtered;
+			}, // filterRawResults
+			formatResultsArrays: function(response_data) {
+				var filtered = this.filterRawResults(response_data);
+				this.results.table_data = [];
+				// assumes outcome_deceased == true
+				var headerOutcome1 = "Deceased";
+				var headerOutcome2 = "Died";
+				var headerNotOutcome = "Living";
+				if (!this.outcome_deceased) {
+					headerOutcome1 = "ESKD";
+					headerOutcome2 = "ESKD";
+					headerNotOutcome = "Non-ESKD";
+				}
+				this.results.strat_with_outcome = {
+					title : ("% Stratified Patients who have " + headerOutcome2),
+					split_options : [],
+					sec_options : [],
+					current_secondary : 1,
+					input : [],
+				};
+				this.results.outcome_with_strat = {
+					title : ("% " + headerOutcome1 + " Patients who fit Stratification"),
+					split_options : [],
+					sec_options : [],
+					current_secondary : 1,
+					input : [],
+				};
+
+				if (this.types_picked.length == 1) {
+					//console.log("inside types_picked.length == 1");
+					var sec_options = [
+						{ value: 0, text: "..."},
+						{ value: 1, text: this.types_picked[0]},
+					];
+					var sec_string = JSON.stringify(sec_options);
+					this.results.strat_with_outcome.sec_options = JSON.parse(sec_string);
+					this.results.outcome_with_strat.sec_options = JSON.parse(sec_string);
+					//console.log(this.results.strat_with_outcome);
+				}
+				else if (this.types_picked.length == 2) {
+					var sec_options = [
+						{ value: 0, text: this.types_picked[0]},
+						{ value: 1, text: this.types_picked[1]},
+					];
+					var sec_string = JSON.stringify(sec_options);
+					this.results.strat_with_outcome.sec_options = JSON.parse(sec_string);
+					this.results.outcome_with_strat.sec_options = JSON.parse(sec_string);
+				}
+				//else if (this.types_picked.length == 3) { do nothing; }
+
+				var strat_with_outcome_data = [];
+				var outcome_with_strat_data = [];
+				this.columns = [
+					{ field : "registry", title : "Registry", width : 80 },
+					{ field : "raw_refined_total", title : ("Number of " + headerOutcome1), hozAlign : "right", sorter : "number", width : 100 },
+					{ field : "strat_with_outcome_of_all_strat", title : ("% Stratified Patients who have " + headerOutcome2), hozAlign :"right", sorter :"number", width : 100 },
+					{ field : "strat_with_outcome_of_all_outcome", title : ("% " + headerOutcome1 + " Patients who fit Stratification"), hozAlign :"right", sorter :"number", width : 100 },
+					{ field : "strat_without_outcome_of_all_not_outcome", title : ("% " + headerNotOutcome + " Patients who fit Stratification"), hozAlign :"right", sorter :"number", width : 100 },
+					{ field : "all_strat_of_all_patient", title : ("% Total Patients who fit Stratification"), hozAlign :"right", sorter :"number", width : 100 },
+					{ field : "all_outcome_of_all_patient", title : ("% Total Patients who have " + headerOutcome2), hozAlign :"right", sorter :"number", width : 100 },
+					{ field : "raw_registry_total", title : ("Total Patients in Registry"), hozAlign :"right", sorter :"number", width : 100}
+				]
+				var include_anca_spec = false;
+				var include_diag = false;
+				var include_sex = false;
+				// insert types in reverse order
+				if (this.chosen_options.Sex.selected) {
+					include_sex = true;
+					this.columns.splice( 1, 0, { title:"Sex", field:"sex", width:60 } );
+				}
+				if (this.chosen_options.Main_Diagnosis.selected) {
+					include_diag = true;
+					this.columns.splice( 1, 0, { title:"Main Diagnosis", field:"diag", width:200 } );
+				}
+				if (this.chosen_options.ANCA_Specificity.selected) {
+					include_anca_spec = true;
+					this.columns.splice( 1, 0, { title:"ANCA Specificity", field:"anca_spec", width:120 } );
+				}
+
+				for (var index in filtered) {
+					var raw_row = filtered[index];
+					var table_row = {
+						registry : raw_row.Registry,
+						raw_refined_total : raw_row.Patient_Count,
+						strat_with_outcome_of_all_strat : getPercent(raw_row.Patient_Count, raw_row.Patient_Count_Stratified),
+						strat_with_outcome_of_all_outcome : getPercent(raw_row.Patient_Count, raw_row.Patient_Count_with_Outcome),
+						strat_without_outcome_of_all_not_outcome : getPercent((raw_row.Patient_Count_Stratified - raw_row.Patient_Count), (raw_row.Total_Patient_Count - raw_row.Patient_Count_with_Outcome)),
+						all_strat_of_all_patient : getPercent(raw_row.Patient_Count_Stratified, raw_row.Total_Patient_Count),
+						all_outcome_of_all_patient : getPercent(raw_row.Patient_Count_Stratified, raw_row.Total_Patient_Count),
+						raw_registry_total : raw_row.Total_Patient_Count,
+					};
+					var strat_with_outcome_datum = {
+						value: table_row.strat_with_outcome_of_all_strat,
+					};
+					var outcome_with_strat_datum = {
+						value : table_row.strat_with_outcome_of_all_outcome,
+					};
+					if (include_anca_spec) {
+						table_row.anca_spec = raw_row.ANCA_Specificity;
+						strat_with_outcome_datum["ANCA_Specificity"] = raw_row.ANCA_Specificity;
+						outcome_with_strat_datum["ANCA_Specificity"] = raw_row.ANCA_Specificity;
+					}
+					if (include_diag) {
+						table_row.diag = raw_row.Main_Diagnosis;
+						strat_with_outcome_datum["Main_Diagnosis"] = raw_row.Main_Diagnosis;
+						outcome_with_strat_datum["Main_Diagnosis"] = raw_row.Main_Diagnosis;
+					}
+					if (include_sex) {
+						table_row.sex = raw_row.Sex;
+						strat_with_outcome_datum["Sex"] = raw_row.Sex;
+						outcome_with_strat_datum["Sex"] = raw_row.Sex;
+					}
+					this.results.table_data.push(table_row);
+					//console.log(strat_with_outcome_datum);
+					strat_with_outcome_data.push(strat_with_outcome_datum);
+					outcome_with_strat_data.push(outcome_with_strat_datum);
+				} // end for
+
+				//console.log(strat_with_outcome_data);
+				this.$refs.results_table.data = this.results.table_data;
+				this.$refs.results_table.cols = this.columns;
+				this.$refs.results_table.render();
+
+				if (this.types_picked.length == 1) {
+					for (var index in strat_with_outcome_data) {
+						strat_with_outcome_data[index]["..."] = "...";
+						outcome_with_strat_data[index]["..."] = "...";
+					}
+				}
+				// else if (this.types_picked.length == 2) { do nothing }
+				else if (this.types_picked.length == 3) {
+					var has1optionPicked = false;
+					var has2optionsPicked = [];
+					// checks if any of the types has 1 option picked
+					for (var option in this.chosen_options) {
+						if (this.chosen_options[option]["picked"].length == 1) {
+							has1optionPicked = true;
+							this.results.strat_with_outcome.title = ("% " + this.chosen_options[option]["picked"][0] + " Stratified Patients who have " + headerOutcome2);
+							this.results.outcome_with_strat.title = ("% " + headerOutcome1 + " " + this.chosen_options[option]["picked"][0] + "  Patients who fit Stratification");
+							var selected = [...this.types_picked];
+							var option_index = selected.indexOf(option);
+							selected.splice(option_index, 1);
+							this.results.strat_with_outcome.sec_options = [
+								{ value: 0, text: selected[0] },
+								{ value: 1, text: selected[1] },
+							]
+							this.results.outcome_with_strat.sec_options = [
+								{ value: 0, text: selected[0] },
+								{ value: 1, text: selected[1] },
+							]
+							for (var datum in strat_with_outcome_data) {
+								delete datum[option];
+							}
+							for (var datum in outcome_with_strat_data) {
+								delete datum[option];
+							}
+							has2optionsPicked = [];
+							break;
+						} else if (this.chosen_options[option]["picked"].length == 2) {
+							has2optionsPicked.push(option);
+						}
+					} // end for
+					// else:
+					this.results.strat_with_outcome.split_options = has2optionsPicked;
+					this.results.strat_with_outcome.chosen_split = "Sex";
+					this.results.strat_with_outcome.sec_options = [
+						{ value: 0, text: "ANCA_Specificity"},
+						{ value: 1, text: "Main_Diagnosis"},
+					];
+					this.results.outcome_with_strat.split_options = has2optionsPicked;
+					this.results.outcome_with_strat.chosen_split = "Sex";
+					this.results.outcome_with_strat.sec_options = [
+						{ value: 0, text: "ANCA_Specificity"},
+						{ value: 1, text: "Main_Diagnosis"},
+					];
+				}
+				this.results.strat_with_outcome.input = strat_with_outcome_data;
+				this.$refs.graph1.results = this.results.strat_with_outcome;
+				this.$refs.graph1.update();
+				this.results.outcome_with_strat.input = outcome_with_strat_data;
+				this.$refs.graph2.results = this.results.outcome_with_strat;
+				this.$refs.graph2.update();
+			}, // formatResultsTableArray
+		}, // end methods
+	}); // end new Vue
+
+	function getPercent(numer, denom) {
+		var percent = 0;
+		if ( denom != 0 && numer != 0 ) {
+			percent = Math.round(100*numer/denom);
+		}
+		return percent;
+	}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,482 @@
+{
+	"0": {
+		"Patient_Count": 73,
+		"Sex": "Female",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 208,
+		"Registry": "Endor"
+	},
+	"1": {
+		"Patient_Count": 112,
+		"Sex": "Female",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 255,
+		"Registry": "Endor"
+	},
+	"2": {
+		"Patient_Count": 95,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 231,
+		"Registry": "Endor"
+	},
+	"3": {
+		"Patient_Count": 98,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 246,
+		"Registry": "Endor"
+	},
+	"4": {
+		"Patient_Count": 90,
+		"Sex": "Male",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 223,
+		"Registry": "Endor"
+	},
+	"5": {
+		"Patient_Count": 73,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 210,
+		"Registry": "Endor"
+	},
+	"6": {
+		"Patient_Count": 64,
+		"Sex": "Male",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 194,
+		"Registry": "Endor"
+	},
+	"7": {
+		"Patient_Count": 92,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 214,
+		"Registry": "Endor"
+	},
+	"8": {
+		"Patient_Count": 97,
+		"Sex": "Female",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 227,
+		"Registry": "Endor"
+	},
+	"9": {
+		"Patient_Count": 79,
+		"Sex": "Female",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 226,
+		"Registry": "Endor"
+	},
+	"10": {
+		"Patient_Count": 85,
+		"Sex": "Female",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 222,
+		"Registry": "Endor"
+	},
+	"11": {
+		"Patient_Count": 88,
+		"Sex": "Female",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 233,
+		"Registry": "Endor"
+	},
+	"12": {
+		"Patient_Count": 92,
+		"Sex": "Female",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 221,
+		"Registry": "Endor"
+	},
+	"13": {
+		"Patient_Count": 84,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 225,
+		"Registry": "Endor"
+	},
+	"14": {
+		"Patient_Count": 90,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 239,
+		"Registry": "Endor"
+	},
+	"15": {
+		"Patient_Count": 92,
+		"Sex": "Female",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 226,
+		"Registry": "Endor"
+	},
+	"16": {
+		"Patient_Count": 82,
+		"Sex": "Female",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 211,
+		"Registry": "Endor"
+	},
+	"17": {
+		"Patient_Count": 72,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 215,
+		"Registry": "Endor"
+	},
+	"18": {
+		"Patient_Count": 79,
+		"Sex": "Male",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 231,
+		"Registry": "Endor"
+	},
+	"19": {
+		"Patient_Count": 89,
+		"Sex": "Male",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 239,
+		"Registry": "Endor"
+	},
+	"20": {
+		"Patient_Count": 94,
+		"Sex": "Female",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 233,
+		"Registry": "Endor"
+	},
+	"21": {
+		"Patient_Count": 88,
+		"Sex": "Female",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 224,
+		"Registry": "Endor"
+	},
+	"22": {
+		"Patient_Count": 89,
+		"Sex": "Female",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 217,
+		"Registry": "Endor"
+	},
+	"23": {
+		"Patient_Count": 106,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 232,
+		"Registry": "Endor"
+	},
+	"24": {
+		"Patient_Count": 80,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 240,
+		"Registry": "Endor"
+	},
+	"25": {
+		"Patient_Count": 81,
+		"Sex": "Male",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 212,
+		"Registry": "Endor"
+	},
+	"26": {
+		"Patient_Count": 77,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 199,
+		"Registry": "Endor"
+	},
+	"27": {
+		"Patient_Count": 81,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 220,
+		"Registry": "Endor"
+	},
+	"28": {
+		"Patient_Count": 82,
+		"Sex": "Male",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 205,
+		"Registry": "Endor"
+	},
+	"29": {
+		"Patient_Count": 90,
+		"Sex": "Male",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 206,
+		"Registry": "Endor"
+	},
+	"30": {
+		"Patient_Count": 93,
+		"Sex": "Male",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 216,
+		"Registry": "Endor"
+	},
+	"31": {
+		"Patient_Count": 90,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 219,
+		"Registry": "Endor"
+	},
+	"32": {
+		"Patient_Count": 80,
+		"Sex": "Male",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 207,
+		"Registry": "Endor"
+	},
+	"33": {
+		"Patient_Count": 93,
+		"Sex": "Male",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 228,
+		"Registry": "Endor"
+	},
+	"34": {
+		"Patient_Count": 86,
+		"Sex": "Female",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 237,
+		"Registry": "Endor"
+	},
+	"35": {
+		"Patient_Count": 61,
+		"Sex": "Female",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 185,
+		"Registry": "Endor"
+	},
+	"36": {
+		"Patient_Count": 84,
+		"Sex": "Female",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 231,
+		"Registry": "Endor"
+	},
+	"37": {
+		"Patient_Count": 85,
+		"Sex": "Female",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 225,
+		"Registry": "Endor"
+	},
+	"38": {
+		"Patient_Count": 90,
+		"Sex": "Male",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 228,
+		"Registry": "Endor"
+	},
+	"39": {
+		"Patient_Count": 83,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO positive",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 231,
+		"Registry": "Endor"
+	},
+	"40": {
+		"Patient_Count": 85,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 221,
+		"Registry": "Endor"
+	},
+	"41": {
+		"Patient_Count": 76,
+		"Sex": "Male",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 202,
+		"Registry": "Endor"
+	},
+	"42": {
+		"Patient_Count": 65,
+		"Sex": "Male",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "ANCA vasculitis unclassified",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 213,
+		"Registry": "Endor"
+	},
+	"43": {
+		"Patient_Count": 95,
+		"Sex": "Male",
+		"ANCA_Specificity": "ELISA negative",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 215,
+		"Registry": "Endor"
+	},
+	"44": {
+		"Patient_Count": 89,
+		"Sex": "Male",
+		"ANCA_Specificity": "MPO and PR3 positive",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 214,
+		"Registry": "Endor"
+	},
+	"45": {
+		"Patient_Count": 94,
+		"Sex": "Male",
+		"ANCA_Specificity": "Other",
+		"Main_Diagnosis": "Microscopic polyangiitis (MPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 228,
+		"Registry": "Endor"
+	},
+	"46": {
+		"Patient_Count": 85,
+		"Sex": "Male",
+		"ANCA_Specificity": "PR3 positive",
+		"Main_Diagnosis": "Granulomatosis with polyangiitis (GPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 209,
+		"Registry": "Endor"
+	},
+	"47": {
+		"Patient_Count": 76,
+		"Sex": "Female",
+		"ANCA_Specificity": "No ELISA performed",
+		"Main_Diagnosis": "Eosinophilic granulomatosis with polyangiitis (EGPA)",
+		"Total_Patient_Count": 5891,
+		"Patient_Count_with_Outcome": 1811,
+		"Patient_Count_Stratified": 232,
+		"Registry": "Endor"
+	}
+}

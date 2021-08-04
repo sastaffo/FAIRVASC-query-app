@@ -1,0 +1,1 @@
+table,td,th{border:1px double #000;border-collapse:collapse}td.get,td.vis,th.get{border:0 double #000;border-collapse:collapse;width:250px;text-align:center}table.get,table.vis{width:"70%";border:0 double #000;table-layout:fixed}
