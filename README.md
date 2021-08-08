@@ -2,12 +2,15 @@
 
 This web application was developed for the [FAIRVASC project](https://fairvasc.eu/about-us/).
 
-
+[Link to Github Repository](https://github.com/sastaffo/FAIRVASC-query-app)
 
 ## Project Abstract
 
-*abstract*
+ANCA-Associated Vasculitis (AAV) is an auto-immune disease that causes inflammation in small blood vessels, often leading to organ damage; most commonly kidney disease and lung disease. The cause of AAV and the factors involved in the occurrence of flare-ups are mostly unknown, although it's thought that genetic and environmental factors play a role.
 
+The disease affects a little more than 100,000 people in Europe, resulting in very few cases in any one country. The FAIRVASC Project was started by the European Vasculitis Society. Its primary goal is to make national registries containing medical information about AAV patients consistent across Europe. By granting researchers access to a greater amount of patient data, they will be able to learn more about the disease, its onset, and possible treatments and cures.
+
+This project involves the creation of a web application that will act as the front-end for researchers accessing information from FAIRVASC registries.
 
 
 ## Running the Project Locally
